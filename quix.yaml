@@ -5,7 +5,30 @@ metadata:
   version: 1.0
 
 # This section describes the Deployments of the data pipeline
-deployments: []
+deployments:
+  - name: clickstreams-web-sockets
+    application: clickstreams-web-sockets
+    deploymentType: Service
+    version: latest
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    variables:
+      - name: output
+        inputType: OutputTopic
+        description: Output topic
+        required: true
+        value: clickstream
+  - name: Demo webshop frontend
+    application: demo-webshop-frontend
+    deploymentType: Service
+    version: latest
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    variables:
 
 # This section describes the Topics of the data pipeline
 topics:
