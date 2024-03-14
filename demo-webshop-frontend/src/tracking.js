@@ -8,7 +8,25 @@ function generateGUID() {
 
 const session_id = generateGUID()
 
-const socket = new WebSocket('ws://localhost:80/' + session_id);
+// Function to replace 'webshop' with 'clickstream' and create WebSocket URL
+function createClickstreamWebSocketURL(session_id) {
+  // Dynamically get the current URL from the window object
+  const currentServiceURL = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
+
+  // Assuming the service name is in the subdomain, replace 'webshop' with 'clickstream'
+  const clickstreamURL = currentServiceURL.replace('webshop', 'clickstream');
+
+  // Decide on the WebSocket protocol based on the current protocol (http or https)
+  const wsProtocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+
+  // Construct the WebSocket URL, excluding the 'http:' or 'https:' part from clickstreamURL
+  const baseURL = clickstreamURL.substring(clickstreamURL.indexOf('//') + 2);
+  const fullWSURL = `${wsProtocol}${baseURL}${session_id ? '/' + session_id : ''}`;
+
+  return fullWSURL;
+}
+
+const socket = new WebSocket(createClickstreamWebSocketURL(session_id));
 
 
 socket.addEventListener('open', function (event) {
