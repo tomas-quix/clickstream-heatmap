@@ -28,7 +28,6 @@ deployments:
       cpu: 200
       memory: 500
       replicas: 1
-    variables:
 
 # This section describes the Topics of the data pipeline
 topics:
