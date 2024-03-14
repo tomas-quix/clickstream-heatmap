@@ -396,3 +396,11 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+.env
+
+.venv/
+
+certificates/
+
+clickstreams-web-sockets/venv/
