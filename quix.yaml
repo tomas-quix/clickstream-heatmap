@@ -14,6 +14,7 @@ deployments:
       cpu: 200
       memory: 500
       replicas: 1
+    desiredStatus: Running
     variables:
       - name: output
         inputType: OutputTopic
@@ -23,11 +24,31 @@ deployments:
   - name: Demo webshop frontend
     application: demo-webshop-frontend
     deploymentType: Service
-    version: latest
+    version: 3c638e2fe6cca05bc07b70629ba3e1be193fb78d
     resources:
       cpu: 200
       memory: 500
       replicas: 1
+    publicAccess:
+      enabled: true
+      urlPrefix: webshop
+    desiredStatus: Running
+    variables:
+      - name: bearer_token
+        inputType: FreeText
+        description: ''
+        required: false
+        value: ''
+      - name: offers_topic
+        inputType: InputTopic
+        description: ''
+        required: false
+        value: special-offers
+      - name: click_topic
+        inputType: OutputTopic
+        description: ''
+        required: false
+        value: click-data
 
 # This section describes the Topics of the data pipeline
 topics:
