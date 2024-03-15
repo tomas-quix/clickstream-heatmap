@@ -21,7 +21,7 @@ function createClickstreamWebSocketURL(session_id) {
 
   // Construct the WebSocket URL, excluding the 'http:' or 'https:' part from clickstreamURL
   const baseURL = clickstreamURL.substring(clickstreamURL.indexOf('//') + 2);
-  const fullWSURL = `${wsProtocol}${baseURL}${session_id ? '/' + session_id : ''}`;
+  const fullWSURL = `${wsProtocol}${baseURL}${session_id}`;
 
   return fullWSURL;
 }

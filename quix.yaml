@@ -36,22 +36,7 @@ deployments:
       enabled: true
       urlPrefix: webshop
     desiredStatus: Running
-    variables:
-      - name: bearer_token
-        inputType: FreeText
-        description: ''
-        required: false
-        value: ''
-      - name: offers_topic
-        inputType: InputTopic
-        description: ''
-        required: false
-        value: special-offers
-      - name: click_topic
-        inputType: OutputTopic
-        description: ''
-        required: false
-        value: click-data
+    
 
 # This section describes the Topics of the data pipeline
 topics:
