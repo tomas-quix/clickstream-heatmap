@@ -36,7 +36,7 @@ deployments:
       enabled: true
       urlPrefix: webshop
     desiredStatus: Running
-    
+    variables: []
 
 # This section describes the Topics of the data pipeline
 topics:
@@ -48,6 +48,13 @@ topics:
       retentionInMinutes: 1440
       retentionInBytes: 52428800
   - name: cpu
+    persisted: false
+    configuration:
+      partitions: 1
+      replicationFactor: 2
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
+  - name: clickstream-group-by-page
     persisted: false
     configuration:
       partitions: 1
