@@ -36,9 +36,13 @@ const ctx = canvas.getContext('2d');
 const tileWidth = canvas.width / 10;
 const tileHeight = canvas.height / 10;
 
+
+
 // Function to calculate color intensity based on heatmap value, with transparency
-function getColorIntensity(value) {
-    const maxValue = 4; // This might need to be dynamic based on incoming data
+function getColorIntensity(value, maxValue) {
+
+  
+
     const intensity = Math.min(1, value / maxValue);
     const redIntensity = Math.floor(intensity * 255);
     return `rgba(${redIntensity},0,0,0.5)`; // Adjust transparency as needed
@@ -46,11 +50,20 @@ function getColorIntensity(value) {
 
 // Function to draw the heatmap
 function drawHeatmap(heatmapData) {
+    let maxValue = 0;
+    for (let x = 0; x < 10; x++) {
+        for (let y = 0; y < 10; y++) {
+            const value = heatmapData[x]?.[y] ?? 0;
+            if (value > maxValue) {
+                maxValue = value; // Update maxValue if current value is greater
+            }
+        }
+    }
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas for redraw
     for (let x = 0; x < 10; x++) {
         for (let y = 0; y < 10; y++) {
             const value = heatmapData[x]?.[y] ?? 0;
-            ctx.fillStyle = getColorIntensity(value);
+            ctx.fillStyle = getColorIntensity(value, maxValue);
             ctx.fillRect(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
         }
     }
