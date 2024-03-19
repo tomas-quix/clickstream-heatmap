@@ -101,7 +101,7 @@ deployments:
   - name: Heatmap frontend
     application: heatmap-frontend
     deploymentType: Service
-    version: 258d8bf94877156b9e358ac2d8a686a194ead07a
+    version: 28b18b48f2cb716e5d3d7f9974869344c55f445c
     resources:
       cpu: 200
       memory: 500
