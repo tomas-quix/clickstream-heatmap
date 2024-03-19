@@ -48,7 +48,7 @@ deployments:
     state:
       enabled: true
       size: 1
-    desiredStatus: Stopped
+    desiredStatus: Running
     variables:
       - name: input
         inputType: InputTopic
@@ -101,7 +101,7 @@ deployments:
   - name: Heatmap frontend
     application: heatmap-frontend
     deploymentType: Service
-    version: 55890136534c895c037d59b419e6cd9154af51de
+    version: e28969a65b64cbf813e79b4bcfea4869b6bf46fc
     resources:
       cpu: 200
       memory: 500
