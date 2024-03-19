@@ -1,11 +1,6 @@
 name: Heatmap frontend
 language: nodejs
 variables:
-  - name: offers_topic
-    inputType: InputTopic
-    description: ''
-    defaultValue: special-offers
-    required: false
   - name: click_topic
     inputType: OutputTopic
     description: ''
