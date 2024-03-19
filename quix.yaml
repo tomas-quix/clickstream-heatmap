@@ -165,13 +165,6 @@ topics:
       retentionInMinutes: 1440
       retentionInBytes: 52428800
       cleanupPolicy: Compact
-  - name: changelog__8fe63924-cf89-4bce-acfa-961eca236c9d--clickstream-group-by-page--hopping_window_300000_1000_reduce
-    persisted: false
-    configuration:
-      partitions: 0
-      retentionInMinutes: 1440
-      retentionInBytes: 52428800
-      cleanupPolicy: Compact
   - name: changelog__98d36b28-16ac-4746-8787-0ca0774b89ae--clickstream-group-by-page--hopping_window_300000_1000_reduce
     persisted: false
     configuration:
