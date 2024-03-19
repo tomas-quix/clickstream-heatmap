@@ -1,4 +1,4 @@
-name: Demo webshop frontend
+name: Heatmap frontend
 language: nodejs
 variables:
   - name: bearer_token
