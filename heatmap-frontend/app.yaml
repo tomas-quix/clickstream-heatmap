@@ -1,10 +1,5 @@
 name: Heatmap frontend
 language: nodejs
-variables:
-  - name: click_topic
-    inputType: OutputTopic
-    description: ''
-    defaultValue: click-data
-    required: false
+variables: []
 dockerfile: src/build/dockerfile
 defaultFile: src/app/services/quix.service.ts
