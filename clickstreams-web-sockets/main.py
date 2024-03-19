@@ -22,7 +22,6 @@ class webSocketSource:
             # Here you could handle incoming messages. This example simply broadcasts them.
             print(str(message))
             self._producer.produce(
-                    timestamp=int(time.time_ns() / 1000000),
                     topic=self._topic.name,
                     key=path.lstrip('/'),
                     value=message)
