@@ -83,3 +83,11 @@ topics:
       retentionInMinutes: 1440
       retentionInBytes: 52428800
       cleanupPolicy: Compact
+  - name: changelog__eac27fda-10d5-4712-a635-66fbaef578fc--clickstream-group-by-page--hopping_window_300000_1000_reduce
+    persisted: false
+    configuration:
+      partitions: 1
+      replicationFactor: 3
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
+      cleanupPolicy: Compact
