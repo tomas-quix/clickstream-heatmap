@@ -1,15 +1,5 @@
-
-function generateGUID() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-  });
-}
-
-const session_id = generateGUID()
-
 // Function to replace 'webshop' with 'clickstream' and create WebSocket URL
-function createClickstreamWebSocketURL(session_id) {
+function createClickstreamWebSocketURL() {
   // Dynamically get the current URL from the window object
   const currentServiceURL = `${window.location.protocol}//${window.location.host}${window.location.pathname}`;
 
@@ -21,12 +11,14 @@ function createClickstreamWebSocketURL(session_id) {
 
   // Construct the WebSocket URL, excluding the 'http:' or 'https:' part from clickstreamURL
   const baseURL = clickstreamURL.substring(clickstreamURL.indexOf('//') + 2);
-  const fullWSURL = `${wsProtocol}${baseURL}${session_id}`;
+  const fullWSURL = `${wsProtocol}${baseURL}}`;
 
+  console.log(baseURL)
+  
   return fullWSURL;
 }
 
-const socket = new WebSocket(createClickstreamWebSocketURL(session_id));
+const socket = new WebSocket("ws://localhost:80/");
 
 
 // Create a canvas element and overlay it over the page
@@ -64,7 +56,7 @@ function drawHeatmap(heatmapData) {
     }
 }
 
-socket2.onmessage = function(event) {
+socket.onmessage = function(event) {
     console.log(event);
     const data = JSON.parse(event.data);
     // Assuming the incoming message is the heatmap data
@@ -73,12 +65,12 @@ socket2.onmessage = function(event) {
 };
 
 // Error handling
-socket2.onerror = function(error) {
+socket.onerror = function(error) {
     console.log(error);
 };
 
 // Optionally, handle the WebSocket connection opening
-socket2.onopen = function(event) {
+socket.onopen = function(event) {
     console.log('WebSocket connection established');
     // You can also send messages to the server here if needed
 };
