@@ -1,7 +1,5 @@
 import asyncio
 import websockets
-
-# This code will publish the CSV data to a stream as if the data were being generated in real-time.
 import time
 import json
 import time
@@ -9,24 +7,15 @@ import os
 from quixstreams import Application
 from dotenv import load_dotenv
 
-
-load_dotenv("./.env")
-
+load_dotenv()
 
 class webSocketSource:
     
-    
     def __init__(self) -> None:
-        print("__init__")
-        
         app = Application.Quix()
         self._topic = app.topic(name=os.environ["output"], value_serializer='json')
-
         self._producer = app.get_producer()
-        print("Done")
         
-
-
     # handle new websocket connections
     async def handle_websocket(self, websocket, path):
         async for message in websocket:
@@ -38,7 +27,6 @@ class webSocketSource:
                     key=path.lstrip('/'),
                     value=message)
 
-
     # start the server. Listen on port 80
     async def start_websocket_server(self):
         print("listening for websocket connections..")
@@ -48,14 +36,8 @@ class webSocketSource:
 
 # Main function to run the application
 async def main():
-    print("Main")
-
-    
     client = webSocketSource()
-    
     await client.start_websocket_server()
-
-
 
 # Run the application
 asyncio.run(main())

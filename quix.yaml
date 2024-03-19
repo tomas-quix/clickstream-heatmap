@@ -36,7 +36,26 @@ deployments:
       enabled: true
       urlPrefix: webshop
     desiredStatus: Running
-    
+    variables: []
+  - name: heatmap-aggregator
+    application: heatmap-aggregator
+    deploymentType: Service
+    version: latest
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: clickstream-group-by-page
+      - name: output
+        inputType: OutputTopic
+        description: Name of the output topic to write to.
+        required: false
+        value: heatmap
 
 # This section describes the Topics of the data pipeline
 topics:

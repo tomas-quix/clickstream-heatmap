@@ -404,3 +404,5 @@ FodyWeavers.xsd
 certificates/
 
 clickstreams-web-sockets/venv/
+
+venv/
