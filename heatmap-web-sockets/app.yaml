@@ -2,7 +2,7 @@ name: clickstreams-web-sockets
 language: Python
 variables:
   - name: input
-    inputType: OutputTopic
+    inputType: InputTopic
     description: Output topic
     defaultValue: heatmap
     required: true

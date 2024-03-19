@@ -36,15 +36,19 @@ deployments:
       enabled: true
       urlPrefix: webshop
     desiredStatus: Running
-    variables: []
+    variables: &o0 []
   - name: heatmap-aggregator
     application: heatmap-aggregator
     deploymentType: Service
-    version: latest
+    version: e5f5287705f3823486065e7a5937dcabd6de11db
     resources:
-      cpu: 200
+      cpu: 1000
       memory: 500
       replicas: 1
+    state:
+      enabled: true
+      size: 1
+    desiredStatus: Running
     variables:
       - name: input
         inputType: InputTopic
@@ -56,13 +60,64 @@ deployments:
         description: Name of the output topic to write to.
         required: false
         value: heatmap
+  - name: group-by
+    application: group-by
+    deploymentType: Service
+    version: e5f5287705f3823486065e7a5937dcabd6de11db
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    desiredStatus: Running
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: clickstream
+      - name: output
+        inputType: OutputTopic
+        description: Name of the output topic to write to.
+        required: false
+        value: clickstream-group-by-page
+  - name: clickstreams-web-sockets 2
+    application: heatmap-web-sockets
+    deploymentType: Service
+    version: 3bf4ad917e76bc01d7fc21b6c8a667cccf8e02d5
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    publicAccess:
+      enabled: true
+      urlPrefix: heatmap-ws
+    desiredStatus: Running
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Output topic
+        required: true
+        value: heatmap
+  - name: Heatmap frontend
+    application: heatmap-frontend
+    deploymentType: Service
+    version: 28b18b48f2cb716e5d3d7f9974869344c55f445c
+    resources:
+      cpu: 200
+      memory: 500
+      replicas: 1
+    publicAccess:
+      enabled: true
+      urlPrefix: heatmap
+    desiredStatus: Running
+    variables: *o0
 
 # This section describes the Topics of the data pipeline
 topics:
   - name: clickstream-group-by-page
     persisted: false
     configuration:
-      partitions: 4
+      partitions: 0
       retentionInMinutes: 1440
       retentionInBytes: 52428800
   - name: clickstream
@@ -79,4 +134,42 @@ topics:
       replicationFactor: 3
       retentionInMinutes: 1440
       retentionInBytes: 52428800
- 
+  - name: heatmap
+    persisted: false
+    configuration:
+      partitions: 1
+      replicationFactor: 3
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
+  - name: changelog__1644ae6c-247b-4d92-9500-869c6d557c18--clickstream-group-by-page--hopping_window_300000_1000_reduce
+    persisted: false
+    configuration:
+      partitions: 4
+      replicationFactor: 3
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
+      cleanupPolicy: Compact
+  - name: changelog__9b595a0f-4d00-4ecc-b4d3-d1d7945d3bba--clickstream-group-by-page--hopping_window_300000_1000_reduce
+    persisted: false
+    configuration:
+      partitions: 4
+      replicationFactor: 3
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
+      cleanupPolicy: Compact
+  - name: changelog__b6a67ba1-4b3b-409c-bd96-9942514ae78c--clickstream-group-by-page--hopping_window_300000_1000_reduce
+    persisted: false
+    configuration:
+      partitions: 4
+      replicationFactor: 3
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
+      cleanupPolicy: Compact
+  - name: changelog__0cc4e9bf-70f8-4579-b224-b75b9a4f1e7b--clickstream-group-by-page--hopping_window_300000_1000_reduce
+    persisted: false
+    configuration:
+      partitions: 4
+      replicationFactor: 3
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
+      cleanupPolicy: Compact
