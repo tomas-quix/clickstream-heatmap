@@ -40,11 +40,14 @@ deployments:
   - name: heatmap-aggregator
     application: heatmap-aggregator
     deploymentType: Service
-    version: latest
+    version: e5f5287705f3823486065e7a5937dcabd6de11db
     resources:
-      cpu: 200
+      cpu: 1000
       memory: 500
       replicas: 1
+    state:
+      enabled: true
+      size: 1
     desiredStatus: Running
     variables:
       - name: input
