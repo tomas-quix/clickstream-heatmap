@@ -2,4 +2,4 @@ name: Heatmap frontend
 language: nodejs
 variables: []
 dockerfile: src/build/dockerfile
-defaultFile: src/app/services/quix.service.ts
+defaultFile: src/build/dockerfile
