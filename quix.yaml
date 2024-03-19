@@ -40,7 +40,7 @@ deployments:
   - name: heatmap-aggregator
     application: heatmap-aggregator
     deploymentType: Service
-    version: e5f5287705f3823486065e7a5937dcabd6de11db
+    version: 879da45e66b29eaa074ae66155f7e4a661134f80
     resources:
       cpu: 1000
       memory: 500
@@ -215,8 +215,7 @@ topics:
   - name: changelog__heatmap-aggregator-v1--clickstream-group-by-page--hopping_window_300000_1000_reduce
     persisted: false
     configuration:
-      partitions: 4
-      replicationFactor: 3
+      partitions: 0
       retentionInMinutes: 1440
       retentionInBytes: 52428800
       cleanupPolicy: Compact
