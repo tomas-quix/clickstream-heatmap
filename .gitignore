@@ -406,3 +406,5 @@ certificates/
 clickstreams-web-sockets/venv/
 
 venv/
+
+heatmap-aggregator/state/

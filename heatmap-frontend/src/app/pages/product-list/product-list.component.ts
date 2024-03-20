@@ -12,7 +12,7 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit, OnDestroy {
-  products: Product[] = PRODUCTS;
+  products: Product[] = PRODUCTS.slice(0, 6);
   categories: string[] = Object.values(Categories).sort();
   formArray = new FormArray<FormControl>([]);
   form = new FormGroup({ categories: this.formArray });
@@ -29,7 +29,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
     this.subscription = this.formArray.valueChanges.subscribe((values: boolean[]) => {
       this.dataService.categorySelection = this.categories.filter((_, i) => values[i]);
-      if (!this.dataService.categorySelection?.length) this.products = PRODUCTS
+      if (!this.dataService.categorySelection?.length) this.products = PRODUCTS.slice(0,6)
       else this.products = PRODUCTS.filter((f) => this.dataService.categorySelection.includes(f.category))
     });
 

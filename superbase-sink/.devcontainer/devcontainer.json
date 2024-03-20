@@ -1,0 +1,31 @@
+
+{
+  "name": "features",
+  "build": {
+    "dockerfile": "../dockerfile",
+    "context": ".."
+  },
+  "containerEnv": {
+    "Quix__Sdk__Token": "sdk-20540cb61ea44f839a85b4fee110ffab",
+    "Quix__Portal__Api": "https://portal-api.dev.quix.io"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylint",
+        "ms-python.debugpy",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+  "forwardPorts": [
+    80
+  ],
+  "remoteUser": "root",
+  //"postCreateCommand": ".devcontainer/post-create-commands.sh"
+}
