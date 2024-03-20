@@ -101,7 +101,7 @@ deployments:
   - name: Heatmap frontend
     application: heatmap-frontend
     deploymentType: Service
-    version: latest
+    version: 2cd134c3b0b8cca174fb0bd014a539dc81909260
     resources:
       cpu: 200
       memory: 500
@@ -110,6 +110,7 @@ deployments:
       enabled: true
       urlPrefix: heatmap
     desiredStatus: Running
+    variables: *o0
 
 # This section describes the Topics of the data pipeline
 topics:
