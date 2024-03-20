@@ -30,7 +30,8 @@ class webSocketSource:
                 print(value)
                 
                 if key in self.websocket_connections:
-                    await self.websocket_connections[key].send(json.dumps(value)) 
+                    for client in self.websocket_connections[key]:
+                        await client.send(json.dumps(value)) 
                     print("Send to " + key)
                 
             else:
@@ -39,7 +40,11 @@ class webSocketSource:
             
     async def handle_websocket(self, websocket, path):
         print(f"Client connected to socket. Path={path}")
-        self.websocket_connections[path] = websocket
+        
+        if path not in self.websocket_connections:
+            self.websocket_connections[path] = [websocket]
+        
+        self.websocket_connections[path].append(websocket)
 
         try:
             print("Keep the connection open and wait for messages if needed")
@@ -53,7 +58,7 @@ class webSocketSource:
         finally:
             print("Removing client from connection list")
             if path in self.websocket_connections:
-                del self.websocket_connections[path]  # Use `del` to remove items from a dictionary
+                self.websocket_connections[path].remove(websocket)  # Use `del` to remove items from a dictionary
 
     async def start_websocket_server(self):
         print("listening for websocket connections..")
