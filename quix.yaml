@@ -112,6 +112,7 @@ deployments:
     desiredStatus: Running
     variables: *o0
 
+
 # This section describes the Topics of the data pipeline
 topics:
   - name: clickstream-group-by-page
