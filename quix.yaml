@@ -117,13 +117,13 @@ topics:
   - name: clickstream-group-by-page
     persisted: false
     configuration:
-      partitions: 2
+      partitions: 4
       retentionInMinutes: 60
       retentionInBytes: 52428800
   - name: clickstream
     persisted: false
     configuration:
-      partitions: 2
+      partitions: 4
       retentionInMinutes: 60
       retentionInBytes: 52428800
   - name: heatmap
