@@ -27,7 +27,7 @@ deployments:
   - name: Demo webshop frontend
     application: demo-webshop-frontend
     deploymentType: Service
-    version: 104ab909dec06ff59db61b1c29b1462ae4e51490
+    version: latest
     resources:
       cpu: 200
       memory: 500
@@ -40,7 +40,7 @@ deployments:
   - name: heatmap-aggregator
     application: heatmap-aggregator
     deploymentType: Service
-    version: 879da45e66b29eaa074ae66155f7e4a661134f80
+    version: latest
     resources:
       cpu: 1000
       memory: 500
@@ -101,7 +101,7 @@ deployments:
   - name: Heatmap frontend
     application: heatmap-frontend
     deploymentType: Service
-    version: 2cd134c3b0b8cca174fb0bd014a539dc81909260
+    version: latest
     resources:
       cpu: 200
       memory: 500
