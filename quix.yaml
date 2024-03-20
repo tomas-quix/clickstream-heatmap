@@ -110,7 +110,6 @@ deployments:
       enabled: true
       urlPrefix: heatmap
     desiredStatus: Running
-    variables: *o0
 
 # This section describes the Topics of the data pipeline
 topics:
@@ -130,7 +129,7 @@ topics:
   - name: heatmap
     persisted: false
     configuration:
-      partitions: 1
+      partitions: 4
       replicationFactor: 3
       retentionInMinutes: 1440
       retentionInBytes: 52428800
