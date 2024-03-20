@@ -129,14 +129,13 @@ topics:
   - name: heatmap
     persisted: false
     configuration:
-      partitions: 2
+      partitions: 4
       retentionInMinutes: 1440
       retentionInBytes: 52428800
   - name: changelog__heatmap-aggregator-v1--clickstream-group-by-page--hopping_window_300000_1000_reduce
     persisted: false
     configuration:
-      partitions: 2
-      replicationFactor: 3
+      partitions: 4
       retentionInMinutes: 1440
       retentionInBytes: 52428800
       cleanupPolicy: Compact
