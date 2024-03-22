@@ -150,3 +150,11 @@ topics:
       replicationFactor: 2
       retentionInMinutes: 1440
       retentionInBytes: 52428800
+  - name: changelog__supabase-sink-v6--clickstream-group-by-page--tumbling_window_5000_reduce
+    persisted: false
+    configuration:
+      partitions: 4
+      replicationFactor: 2
+      retentionInMinutes: 60
+      retentionInBytes: 52428800
+      cleanupPolicy: Compact
