@@ -1,5 +1,6 @@
 import asyncio
 import websockets
+from websockets.exceptions import ConnectionClosedError
 import os
 from quixstreams import Application
 from dotenv import load_dotenv
@@ -31,9 +32,11 @@ class webSocketSource:
                 
                 if key in self.websocket_connections:
                     for client in self.websocket_connections[key]:
-                        await client.send(json.dumps(value)) 
+                        try:
+                            await client.send(json.dumps(value))
+                        except ConnectionClosedError:
+                            print("Connection already closed.")
                     print("Send to " + key)
-                
             else:
                 await asyncio.sleep(1)
                 
