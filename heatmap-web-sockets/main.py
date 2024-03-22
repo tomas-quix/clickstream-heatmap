@@ -33,7 +33,7 @@ class webSocketSource:
                 if key in self.websocket_connections:
                     for client in self.websocket_connections[key]:
                         try:
-                            await client.send(json.dumps(value))
+                            #await client.send(json.dumps(value))
                         except ConnectionClosedError:
                             print("Connection already closed.")
                     print("Send to " + key)
