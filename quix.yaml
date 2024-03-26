@@ -111,26 +111,6 @@ deployments:
       urlPrefix: heatmap
     desiredStatus: Running
     variables: *o0
-  - name: Slack
-    application: Slack
-    deploymentType: Service
-    version: 7d5885c4e129dc3812e5b8c4c572de51089b4280
-    resources:
-      cpu: 200
-      memory: 200
-      replicas: 1
-    desiredStatus: Running
-    variables:
-      - name: input
-        inputType: InputTopic
-        description: Name of the input topic to listen to.
-        required: true
-        value: hard-braking
-      - name: webhook_url
-        inputType: FreeText
-        description: The webhook url to send notifications to
-        required: true
-        value: adasdasda
 
 # This section describes the Topics of the data pipeline
 topics:
