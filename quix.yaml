@@ -119,27 +119,27 @@ topics:
     configuration:
       partitions: 4
       replicationFactor: 2
-      retentionInMinutes: 60
+      retentionInMinutes: 10080
       retentionInBytes: 52428800
   - name: clickstream
     persisted: false
     configuration:
       partitions: 4
       replicationFactor: 2
-      retentionInMinutes: 60
+      retentionInMinutes: 10080
       retentionInBytes: 52428800
   - name: heatmap
     persisted: false
     configuration:
       partitions: 4
       replicationFactor: 2
-      retentionInMinutes: 1440
+      retentionInMinutes: 10080
       retentionInBytes: 52428800
   - name: changelog__heatmap-aggregator-v1--clickstream-group-by-page--hopping_window_300000_1000_reduce
     persisted: false
     configuration:
       partitions: 4
       replicationFactor: 2
-      retentionInMinutes: 1440
+      retentionInMinutes: 10080
       retentionInBytes: 52428800
       cleanupPolicy: Compact
