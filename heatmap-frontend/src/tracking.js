@@ -18,7 +18,7 @@ function createClickstreamWebSocketURL() {
   return fullWSURL;
 }
 
-const socket = new WebSocket("ws://localhost:80");
+const socket = new WebSocket(createClickstreamWebSocketURL());
 
 
 // Create a canvas element and overlay it over the page
