@@ -119,7 +119,7 @@ topics:
     configuration:
       partitions: 4
       replicationFactor: 2
-      retentionInMinutes: 60
+      retentionInMinutes: 10080
       retentionInBytes: 52428800
   - name: clickstream
     persisted: false
