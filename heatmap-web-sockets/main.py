@@ -11,11 +11,13 @@ load_dotenv()
 class webSocketSource:
     
     def __init__(self) -> None:
-        app = Application.Quix(str(uuid.uuid4()), auto_offset_reset="earliest")
-        self._topic = app.topic(name=os.environ["input"], value_serializer='json')
+        app = Application.Quix("heatmap-web-sockets-v1", auto_offset_reset="earliest")
+        self._topic = app.topic(name=os.environ["input"])
+        
         self._consumer = app.get_consumer()
         self._consumer.subscribe([self._topic.name])
         
+        # Holds all client connections partitioned by page.
         self.websocket_connections = {}
         
         # Instead of directly creating a task in the constructor, 
@@ -28,7 +30,6 @@ class webSocketSource:
             if message is not None:
                 value = json.loads(bytes.decode(message.value()))
                 key = bytes.decode(message.key())
-                print(value)
                 
                 if key in self.websocket_connections:
                     for client in self.websocket_connections[key]:
@@ -36,7 +37,9 @@ class webSocketSource:
                             await client.send(json.dumps(value))
                         except ConnectionClosedError:
                             print("Connection already closed.")
-                    print("Send to " + key)
+                    
+                    print(value)
+                    print(f"Send to {key} {str(len(self.websocket_connections[key]))} times.")
             else:
                 await asyncio.sleep(1)
                 
@@ -45,8 +48,8 @@ class webSocketSource:
         print(f"Client connected to socket. Path={path}")
         
         if path not in self.websocket_connections:
-            self.websocket_connections[path] = [websocket]
-        
+            self.websocket_connections[path] = []
+
         self.websocket_connections[path].append(websocket)
 
         try:

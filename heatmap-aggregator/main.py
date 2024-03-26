@@ -13,15 +13,21 @@ output_topic = app.topic(os.environ["output"])
 
 sdf = app.dataframe(input_topic)
 
+# We are only interested in mousemove events.
 sdf = sdf[sdf["type"] == "mousemove"]
 
 tile_grid_size = 10
 
 def heatmap(state: dict, row: dict):
     
-    x = str(math.floor(tile_grid_size * (row["mouse-coordinates"]["x"] / row["window"]["width"])))
-    y = str(math.floor(tile_grid_size * (row["mouse-coordinates"]["y"] / row["window"]["height"])))
+    # We calculate position of mouse relative to page pixel resolution.
+    x_relative = row["mouse-coordinates"]["x"] / row["window"]["width"]
+    y_relative = row["mouse-coordinates"]["y"] / row["window"]["height"]
     
+    x = str(math.floor(tile_grid_size * x_relative))
+    y = str(math.floor(tile_grid_size * y_relative))
+    
+    # We store grid in dictionary of dictionaries.
     if x not in state:
         state[x] = {}
         
@@ -32,7 +38,7 @@ def heatmap(state: dict, row: dict):
     
     return state
     
-
+# We calculate hopping window of 5 minutes with step every second.
 sdf = sdf.hopping_window(timedelta(minutes=5), timedelta(seconds=1)) \
         .reduce(heatmap, lambda row: heatmap({}, row))\
         .final()
