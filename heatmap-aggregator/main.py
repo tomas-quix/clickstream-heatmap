@@ -19,13 +19,8 @@ sdf = sdf[sdf["type"] == "mousemove"]
 tile_grid_size = 10
 
 def heatmap(state: dict, row: dict):
-    
-    # We calculate position of mouse relative to page pixel resolution.
-    x_relative = row["mouse-coordinates"]["x"] / row["window"]["width"]
-    y_relative = row["mouse-coordinates"]["y"] / row["window"]["height"]
-    
-    x = str(math.floor(tile_grid_size * x_relative))
-    y = str(math.floor(tile_grid_size * y_relative))
+    x = str(row["x"])
+    y = str(row["y"])
     
     # We store grid in dictionary of dictionaries.
     if x not in state:
@@ -37,9 +32,19 @@ def heatmap(state: dict, row: dict):
     state[x][y] += 1
     
     return state
-    
+
+# We calculate relative coordinates of mouse against window size. 
+sdf["x-relative"] = sdf["mouse-coordinates"]["x"] / sdf["window"]["width"]
+sdf["y-relative"] = sdf["mouse-coordinates"]["y"] / sdf["window"]["height"]
+
+sdf["tile-coordinates"] = sdf.apply(lambda row: {
+    "x": math.floor(tile_grid_size * row["x-relative"]),
+    "y": math.floor(tile_grid_size * row["y-relative"])
+})
+
 # We calculate hopping window of 5 minutes with step every second.
-sdf = sdf.hopping_window(timedelta(minutes=5), timedelta(seconds=1)) \
+sdf = sdf.apply(lambda row: row["tile-coordinates"]) \
+        .hopping_window(timedelta(minutes=5), timedelta(seconds=1)) \
         .reduce(heatmap, lambda row: heatmap({}, row))\
         .final()
 
