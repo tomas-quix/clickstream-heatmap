@@ -135,3 +135,11 @@ topics:
       replicationFactor: 2
       retentionInMinutes: 10080
       retentionInBytes: 52428800
+  - name: changelog__heatmap-aggregator-v1--clickstream-group-by-page--hopping_window_300000_1000_reduce
+    persisted: false
+    configuration:
+      partitions: 1
+      replicationFactor: 2
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
+      cleanupPolicy: Compact
