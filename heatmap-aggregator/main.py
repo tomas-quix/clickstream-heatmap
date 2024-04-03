@@ -6,9 +6,9 @@ from datetime import timedelta
 
 load_dotenv()
 
-tile_grid_size = 50
+tile_grid_size = int(os.environ.get("grid_size", 50))
 
-app = Application.Quix("heatmap-aggregator-v1.1" + str(tile_grid_size), auto_offset_reset="earliest", use_changelog_topics=False)
+app = Application.Quix("heatmap-aggregator-v1.1-" + str(tile_grid_size), auto_offset_reset="earliest", use_changelog_topics=False)
 
 input_topic = app.topic(os.environ["input"])
 output_topic = app.topic(os.environ["output"])
