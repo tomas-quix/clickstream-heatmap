@@ -32,7 +32,7 @@ const socket = new WebSocket(createClickstreamWebSocketURL(session_id));
 socket.addEventListener('open', function (event) {
 
     // Attach event listeners to the document with the throttled function
-    document.addEventListener('mousemove', throttle(reportRelativePosition, 1000));
+    document.addEventListener('mousemove', throttle(reportRelativePosition, 250));
     document.addEventListener('click', reportRelativePosition);
 });
 
@@ -72,8 +72,8 @@ const throttle = (func, limit) => {
         "query_prams" : window.location.search,
         "buttons": event.buttons,
         "window": {
-            "width": window.innerWidth,
-            "height": window.innerHeight
+            "width": document.documentElement.scrollWidth,
+            "height": document.documentElement.scrollHeight,
         },
         "mouse-coordinates": {
             "x": event.clientX,

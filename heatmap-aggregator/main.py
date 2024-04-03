@@ -6,7 +6,9 @@ from datetime import timedelta
 
 load_dotenv()
 
-app = Application.Quix("heatmap-aggregator-v1.1", auto_offset_reset="earliest")
+tile_grid_size = 50
+
+app = Application.Quix("heatmap-aggregator-v1.1" + str(tile_grid_size), auto_offset_reset="earliest", use_changelog_topics=False)
 
 input_topic = app.topic(os.environ["input"])
 output_topic = app.topic(os.environ["output"])
@@ -16,7 +18,6 @@ sdf = app.dataframe(input_topic)
 # We are only interested in mousemove events.
 sdf = sdf[sdf["type"] == "mousemove"]
 
-tile_grid_size = 10
 
 def heatmap(state: dict, row: dict):
     x = str(row["x"])
@@ -44,9 +45,11 @@ sdf["tile-coordinates"] = sdf.apply(lambda row: {
 
 # We calculate hopping window of 5 minutes with step every second.
 sdf = sdf.apply(lambda row: row["tile-coordinates"]) \
-        .hopping_window(timedelta(minutes=5), timedelta(seconds=1)) \
+        .hopping_window(timedelta(minutes=5), 250) \
         .reduce(heatmap, lambda row: heatmap({}, row))\
         .final()
+        
+sdf["grid-size"] = tile_grid_size
 
 sdf = sdf.update(lambda row: print(row))
 sdf = sdf.to_topic(output_topic)
