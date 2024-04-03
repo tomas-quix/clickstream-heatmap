@@ -6,7 +6,7 @@ from datetime import timedelta
 
 load_dotenv()
 
-app = Application.Quix("heatmap-aggregator-v1", auto_offset_reset="earliest")
+app = Application.Quix("heatmap-aggregator-v1.1", auto_offset_reset="earliest")
 
 input_topic = app.topic(os.environ["input"])
 output_topic = app.topic(os.environ["output"])
