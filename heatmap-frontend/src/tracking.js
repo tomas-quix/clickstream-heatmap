@@ -33,8 +33,7 @@ canvas.style.pointerEvents = 'none'; // Allows clicking through the canvas
 document.body.appendChild(canvas);
 
 const ctx = canvas.getContext('2d');
-const tileWidth = canvas.width / 10;
-const tileHeight = canvas.height / 10;
+
 
 
 
@@ -49,10 +48,14 @@ function getColorIntensity(value, maxValue) {
 }
 
 // Function to draw the heatmap
-function drawHeatmap(heatmapData) {
+function drawHeatmap(heatmapData, gridSize) {
+
+    const tileWidth = canvas.width / gridSize;
+    const tileHeight = canvas.height / gridSize;
+
     let maxValue = 0;
-    for (let x = 0; x < 10; x++) {
-        for (let y = 0; y < 10; y++) {
+    for (let x = 0; x < gridSize; x++) {
+        for (let y = 0; y < gridSize; y++) {
             const value = heatmapData[x]?.[y] ?? 0;
             if (value > maxValue) {
                 maxValue = value; // Update maxValue if current value is greater
@@ -60,8 +63,8 @@ function drawHeatmap(heatmapData) {
         }
     }
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas for redraw
-    for (let x = 0; x < 10; x++) {
-        for (let y = 0; y < 10; y++) {
+    for (let x = 0; x < gridSize; x++) {
+        for (let y = 0; y < gridSize; y++) {
             const value = heatmapData[x]?.[y] ?? 0;
             ctx.fillStyle = getColorIntensity(value, maxValue);
             ctx.fillRect(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
@@ -72,9 +75,11 @@ function drawHeatmap(heatmapData) {
 socket.onmessage = function(event) {
     console.log(event);
     const data = JSON.parse(event.data);
+
+    gridSize = data["grid-size"]
     // Assuming the incoming message is the heatmap data
     // Adjust this as necessary based on the structure of your WebSocket messages
-    drawHeatmap(data["value"]);
+    drawHeatmap(data["value"], gridSize);
 };
 
 // Error handling
