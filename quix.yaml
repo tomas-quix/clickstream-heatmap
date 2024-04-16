@@ -48,7 +48,7 @@ deployments:
     state:
       enabled: true
       size: 1
-    desiredStatus: Running
+    desiredStatus: Stopped
     variables:
       - name: input
         inputType: InputTopic
@@ -134,4 +134,11 @@ topics:
       partitions: 2
       replicationFactor: 2
       retentionInMinutes: 10080
+      retentionInBytes: 52428800
+  - name: csv-data
+    persisted: false
+    configuration:
+      partitions: 1
+      replicationFactor: 2
+      retentionInMinutes: 1440
       retentionInBytes: 52428800
