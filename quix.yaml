@@ -36,7 +36,7 @@ deployments:
       enabled: true
       urlPrefix: webshop
     desiredStatus: Running
-    variables: &o0 []
+    variables: []
   - name: Heatmap aggregator
     application: heatmap-aggregator
     deploymentType: Service
@@ -48,7 +48,7 @@ deployments:
     state:
       enabled: true
       size: 1
-    desiredStatus: Stopped
+    desiredStatus: Running
     variables:
       - name: input
         inputType: InputTopic
@@ -110,7 +110,7 @@ deployments:
       enabled: true
       urlPrefix: heatmap
     desiredStatus: Running
-    variables: *o0
+    variables: []
 
 # This section describes the Topics of the data pipeline
 topics:
@@ -136,6 +136,13 @@ topics:
       retentionInMinutes: 10080
       retentionInBytes: 52428800
   - name: csv-data
+    persisted: false
+    configuration:
+      partitions: 1
+      replicationFactor: 2
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
+  - name: raw
     persisted: false
     configuration:
       partitions: 1
