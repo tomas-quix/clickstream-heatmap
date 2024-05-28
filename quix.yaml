@@ -36,7 +36,7 @@ deployments:
       enabled: true
       urlPrefix: webshop
     desiredStatus: Running
-    variables: &o0 []
+    variables: []
   - name: Heatmap aggregator
     application: heatmap-aggregator
     deploymentType: Service
@@ -48,7 +48,7 @@ deployments:
     state:
       enabled: true
       size: 1
-    desiredStatus: Running
+    desiredStatus: Stopped
     variables:
       - name: input
         inputType: InputTopic
@@ -110,7 +110,21 @@ deployments:
       enabled: true
       urlPrefix: heatmap
     desiredStatus: Running
-    variables: *o0
+    variables: []
+  - name: Demo Data Source
+    application: Demo Data Source
+    deploymentType: Job
+    version: latest
+    resources:
+      cpu: 200
+      memory: 200
+      replicas: 1
+    variables:
+      - name: output
+        inputType: OutputTopic
+        description: Name of the output topic to write into
+        required: true
+        value: f1-data
 
 # This section describes the Topics of the data pipeline
 topics:
@@ -135,11 +149,3 @@ topics:
       replicationFactor: 2
       retentionInMinutes: 10080
       retentionInBytes: 52428800
-  - name: changelog__heatmap-aggregator-v1--clickstream-group-by-page--hopping_window_300000_1000_reduce
-    persisted: false
-    configuration:
-      partitions: 2
-      replicationFactor: 2
-      retentionInMinutes: 10080
-      retentionInBytes: 52428800
-      cleanupPolicy: Compact
