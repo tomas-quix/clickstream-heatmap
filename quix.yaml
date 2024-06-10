@@ -36,7 +36,7 @@ deployments:
       enabled: true
       urlPrefix: webshop
     desiredStatus: Running
-    variables: &o0 []
+    variables: []
   - name: Heatmap aggregator
     application: heatmap-aggregator
     deploymentType: Service
@@ -110,26 +110,29 @@ deployments:
       enabled: true
       urlPrefix: heatmap
     desiredStatus: Running
-    variables: *o0
+    variables: []
 
 # This section describes the Topics of the data pipeline
 topics:
   - name: clickstream-group-by-page
-    persisted: false
     configuration:
       partitions: 2
       replicationFactor: 2
       retentionInMinutes: 10080
       retentionInBytes: 52428800
   - name: clickstream
-    persisted: false
     configuration:
       partitions: 2
       replicationFactor: 2
       retentionInMinutes: 10080
       retentionInBytes: 52428800
   - name: heatmap
-    persisted: false
+    configuration:
+      partitions: 2
+      replicationFactor: 2
+      retentionInMinutes: 10080
+      retentionInBytes: 52428800
+  - name: repartition__7ecb87cb-9990-40a9-b549-f7406874ee93--clickstream-group-by-page--tile-coordinates
     configuration:
       partitions: 2
       replicationFactor: 2
