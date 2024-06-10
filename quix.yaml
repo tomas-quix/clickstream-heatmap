@@ -156,3 +156,9 @@ topics:
       replicationFactor: 2
       retentionInMinutes: 10080
       retentionInBytes: 52428800
+  - name: repartition__4b102f16-d91e-44ff-800b-9c4b42c806ed--clickstream-group-by-page--tile-coordinates
+    configuration:
+      partitions: 2
+      replicationFactor: 2
+      retentionInMinutes: 10080
+      retentionInBytes: 52428800
