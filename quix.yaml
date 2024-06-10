@@ -237,9 +237,3 @@ topics:
       replicationFactor: 2
       retentionInMinutes: 1440
       retentionInBytes: 52428800
-  - name: repartition__heatmap-aggregator-v1--tiles-clickstream--group_by_page_tiles
-    configuration:
-      partitions: 4
-      replicationFactor: 2
-      retentionInMinutes: 1440
-      retentionInBytes: 52428800
