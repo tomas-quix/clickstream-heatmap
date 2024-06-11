@@ -48,38 +48,22 @@ deployments:
     state:
       enabled: true
       size: 1
-    desiredStatus: Running
+    desiredStatus: Stopped
     variables:
       - name: input
         inputType: InputTopic
         description: Name of the input topic to listen to.
-        required: false
-        value: clickstream-group-by-page
+        required: true
+        value: tiles-clickstream
       - name: output
         inputType: OutputTopic
         description: Name of the output topic to write to.
-        required: false
+        required: true
         value: heatmap
-  - name: Group By
-    application: group-by
-    deploymentType: Service
-    version: latest
-    resources:
-      cpu: 500
-      memory: 500
-      replicas: 1
-    desiredStatus: Running
-    variables:
-      - name: input
-        inputType: InputTopic
-        description: Name of the input topic to listen to.
+      - name: grid_size
+        inputType: FreeText
         required: false
-        value: clickstream
-      - name: output
-        inputType: OutputTopic
-        description: Name of the output topic to write to.
-        required: false
-        value: clickstream-group-by-page
+        value: 50
   - name: Heatmap Web Sockets
     application: heatmap-web-sockets
     deploymentType: Service
@@ -111,6 +95,29 @@ deployments:
       urlPrefix: heatmap
     desiredStatus: Running
     variables: []
+  - name: Tiles Coordinates
+    application: tiles-coordinates
+    deploymentType: Service
+    version: latest
+    resources:
+      cpu: 1000
+      memory: 500
+      replicas: 1
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: clickstream
+      - name: output
+        inputType: OutputTopic
+        description: Name of the output topic to write to.
+        required: false
+        value: tiles-clickstream
+      - name: grid_size
+        inputType: FreeText
+        required: false
+        value: 10
 
 # This section describes the Topics of the data pipeline
 topics:
@@ -132,111 +139,9 @@ topics:
       replicationFactor: 2
       retentionInMinutes: 10080
       retentionInBytes: 52428800
-  - name: repartition__7ecb87cb-9990-40a9-b549-f7406874ee93--clickstream-group-by-page--tile-coordinates
-    configuration:
-      partitions: 2
-      replicationFactor: 2
-      retentionInMinutes: 10080
-      retentionInBytes: 52428800
-  - name: repartition__e8c0c149-3ac0-488c-a69d-262b3b071af8--clickstream-group-by-page--tile-coordinates
-    configuration:
-      partitions: 2
-      replicationFactor: 2
-      retentionInMinutes: 10080
-      retentionInBytes: 52428800
-  - name: repartition__13f8bd09-e449-4357-8c5c-a5260e617e36--clickstream-group-by-page--tile-coordinates
-    configuration:
-      partitions: 2
-      replicationFactor: 2
-      retentionInMinutes: 10080
-      retentionInBytes: 52428800
-  - name: repartition__b959a449-04db-464a-a540-8976367d6205--clickstream-group-by-page--tile-coordinates
-    configuration:
-      partitions: 2
-      replicationFactor: 2
-      retentionInMinutes: 10080
-      retentionInBytes: 52428800
-  - name: repartition__4b102f16-d91e-44ff-800b-9c4b42c806ed--clickstream-group-by-page--tile-coordinates
-    configuration:
-      partitions: 2
-      replicationFactor: 2
-      retentionInMinutes: 10080
-      retentionInBytes: 52428800
   - name: tiles-clickstream
     configuration:
       partitions: 4
-  - name: repartition__transformation-v1.1--clickstream--group_by_tile
-    configuration:
-      partitions: 2
-      replicationFactor: 2
-      retentionInMinutes: 10080
-      retentionInBytes: 52428800
-  - name: repartition__transformation-v1.2--clickstream--group_by_tile
-    configuration:
-      partitions: 2
-      replicationFactor: 2
-      retentionInMinutes: 10080
-      retentionInBytes: 52428800
-  - name: repartition__b8083672-db09-4103-a07a-645236f8199d--clickstream-group-by-page--group_by_page_tiles
-    configuration:
-      partitions: 2
-      replicationFactor: 2
-      retentionInMinutes: 10080
-      retentionInBytes: 52428800
-  - name: repartition__cfafaddc-0a52-48f3-a594-649ea8fce248--clickstream-group-by-page--group_by_page_tiles
-    configuration:
-      partitions: 2
-      replicationFactor: 2
-      retentionInMinutes: 10080
-      retentionInBytes: 52428800
-  - name: repartition__319e5842-bae0-4bb8-88ee-e3b85f31cfcc--clickstream-group-by-page--group_by_page_tiles
-    configuration:
-      partitions: 2
-      replicationFactor: 2
-      retentionInMinutes: 10080
-      retentionInBytes: 52428800
-  - name: repartition__ad3ea7ed-55ad-491c-89da-31b0e6471d59--clickstream-group-by-page--group_by_page_tiles
-    configuration:
-      partitions: 2
-      replicationFactor: 2
-      retentionInMinutes: 10080
-      retentionInBytes: 52428800
-  - name: repartition__c6c208bf-0b90-43dd-a161-e1381e171217--clickstream-group-by-page--group_by_page_tiles
-    configuration:
-      partitions: 2
-      replicationFactor: 2
-      retentionInMinutes: 10080
-      retentionInBytes: 52428800
-  - name: repartition__2cb547f9-8ca3-4149-b7cf-d38f5614e4e5--tiles-clickstream--group_by_page_tiles
-    configuration:
-      partitions: 1
-      replicationFactor: 2
-      retentionInMinutes: 1440
-      retentionInBytes: 52428800
-  - name: repartition__467ec1d3-0796-47f5-a80e-422ac23d25b4--tiles-clickstream--group_by_page_tiles
-    configuration:
-      partitions: 1
-      replicationFactor: 2
-      retentionInMinutes: 1440
-      retentionInBytes: 52428800
-  - name: repartition__718eb290-7249-40d0-ae70-5858447ba222--tiles-clickstream--group_by_page_tiles
-    configuration:
-      partitions: 1
-      replicationFactor: 2
-      retentionInMinutes: 1440
-      retentionInBytes: 52428800
-  - name: repartition__45233686-d24d-4c0e-b871-df21f34d4310--tiles-clickstream--group_by_page_tiles
-    configuration:
-      partitions: 1
-      replicationFactor: 2
-      retentionInMinutes: 1440
-      retentionInBytes: 52428800
-  - name: repartition__bc43d822-15fd-4ccc-8786-ef8b96fb67bf--tiles-clickstream--group_by_page_tiles
-    configuration:
-      partitions: 1
-      replicationFactor: 2
-      retentionInMinutes: 1440
-      retentionInBytes: 52428800
   - name: repartition__heatmap-aggregator-v1--tiles-clickstream--group_by_page_tiles
     configuration:
       partitions: 4
@@ -256,6 +161,12 @@ topics:
       retentionInMinutes: 1440
       retentionInBytes: 52428800
   - name: repartition__heatmap-aggregator-v1.1--tiles-clickstream--group_by
+    configuration:
+      partitions: 4
+      replicationFactor: 2
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
+  - name: repartition__heatmap-aggregator-v1.1--tiles-clickstream--group_by_tile
     configuration:
       partitions: 4
       replicationFactor: 2
