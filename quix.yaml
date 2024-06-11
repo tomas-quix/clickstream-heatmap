@@ -111,6 +111,29 @@ deployments:
       urlPrefix: heatmap
     desiredStatus: Running
     variables: []
+  - name: tiles-coordinates
+    application: tiles-coordinates
+    deploymentType: Service
+    version: latest
+    resources:
+      cpu: 1000
+      memory: 500
+      replicas: 1
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: clickstream
+      - name: output
+        inputType: OutputTopic
+        description: Name of the output topic to write to.
+        required: false
+        value: tiles-clickstream
+      - name: grid_size
+        inputType: FreeText
+        required: false
+        value: 10
 
 # This section describes the Topics of the data pipeline
 topics:
