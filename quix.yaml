@@ -48,7 +48,7 @@ deployments:
     state:
       enabled: true
       size: 1
-    desiredStatus: Stopped
+    desiredStatus: Running
     variables:
       - name: input
         inputType: InputTopic
@@ -128,12 +128,6 @@ topics:
       retentionInMinutes: 10080
       retentionInBytes: 52428800
   - name: clickstream
-    configuration:
-      partitions: 2
-      replicationFactor: 2
-      retentionInMinutes: 10080
-      retentionInBytes: 52428800
-  - name: heatmap
     configuration:
       partitions: 2
       replicationFactor: 2
