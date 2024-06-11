@@ -53,13 +53,17 @@ deployments:
       - name: input
         inputType: InputTopic
         description: Name of the input topic to listen to.
-        required: false
-        value: clickstream-group-by-page
+        required: true
+        value: tiles-clickstream
       - name: output
         inputType: OutputTopic
         description: Name of the output topic to write to.
-        required: false
+        required: true
         value: heatmap
+      - name: grid_size
+        inputType: FreeText
+        required: false
+        value: 50
   - name: Heatmap Web Sockets
     application: heatmap-web-sockets
     deploymentType: Service
