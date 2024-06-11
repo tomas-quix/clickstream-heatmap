@@ -142,12 +142,6 @@ topics:
   - name: tiles-clickstream
     configuration:
       partitions: 4
-  - name: repartition__transformation-v1.1--clickstream--group_by_tile
-    configuration:
-      partitions: 2
-      replicationFactor: 2
-      retentionInMinutes: 10080
-      retentionInBytes: 52428800
   - name: repartition__transformation-v1.2--clickstream--group_by_tile
     configuration:
       partitions: 2
