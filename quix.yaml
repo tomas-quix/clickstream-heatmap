@@ -95,7 +95,7 @@ deployments:
       urlPrefix: heatmap
     desiredStatus: Running
     variables: []
-  - name: tiles-coordinates
+  - name: Tiles Coordinates
     application: tiles-coordinates
     deploymentType: Service
     version: latest
