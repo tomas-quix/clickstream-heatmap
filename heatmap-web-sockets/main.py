@@ -29,17 +29,23 @@ class webSocketSource:
             
             if message is not None:
                 value = json.loads(bytes.decode(message.value()))
-                key = bytes.decode(message.key())
                 
-                if key in self.websocket_connections:
-                    for client in self.websocket_connections[key]:
+                print(message.key())
+                key = json.loads(message.key())
+                
+                payload = {**key, **value}
+                
+                page = key["relative_path"]
+                
+                if page in self.websocket_connections:
+                    for client in self.websocket_connections[page]:
                         try:
-                            await client.send(json.dumps(value))
-                        except:
-                            print("Connection already closed.")
+                            await client.send(json.dumps(payload))
+                        except Exception:
+                            print(traceback.print_exc())
                     
                     print(value)
-                    print(f"Send to {key} {str(len(self.websocket_connections[key]))} times.")
+                    print(f"Send to {page} {str(len(self.websocket_connections[page]))} times.")
             else:
                 await asyncio.sleep(1)
                 

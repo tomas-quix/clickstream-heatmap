@@ -36,7 +36,7 @@ deployments:
       enabled: true
       urlPrefix: webshop
     desiredStatus: Running
-    variables: &o0 []
+    variables: []
   - name: Heatmap aggregator
     application: heatmap-aggregator
     deploymentType: Service
@@ -48,38 +48,22 @@ deployments:
     state:
       enabled: true
       size: 1
-    desiredStatus: Running
+    desiredStatus: Stopped
     variables:
       - name: input
         inputType: InputTopic
         description: Name of the input topic to listen to.
-        required: false
-        value: clickstream-group-by-page
+        required: true
+        value: tiles-clickstream
       - name: output
         inputType: OutputTopic
         description: Name of the output topic to write to.
-        required: false
+        required: true
         value: heatmap
-  - name: Group By
-    application: group-by
-    deploymentType: Service
-    version: latest
-    resources:
-      cpu: 500
-      memory: 500
-      replicas: 1
-    desiredStatus: Running
-    variables:
-      - name: input
-        inputType: InputTopic
-        description: Name of the input topic to listen to.
+      - name: grid_size
+        inputType: FreeText
         required: false
-        value: clickstream
-      - name: output
-        inputType: OutputTopic
-        description: Name of the output topic to write to.
-        required: false
-        value: clickstream-group-by-page
+        value: 50
   - name: Heatmap Web Sockets
     application: heatmap-web-sockets
     deploymentType: Service
@@ -110,28 +94,87 @@ deployments:
       enabled: true
       urlPrefix: heatmap
     desiredStatus: Running
-    variables: *o0
+    variables: []
+  - name: Tiles Coordinates
+    application: tiles-coordinates
+    deploymentType: Service
+    version: latest
+    resources:
+      cpu: 1000
+      memory: 500
+      replicas: 1
+    variables:
+      - name: input
+        inputType: InputTopic
+        description: Name of the input topic to listen to.
+        required: false
+        value: clickstream
+      - name: output
+        inputType: OutputTopic
+        description: Name of the output topic to write to.
+        required: false
+        value: tiles-clickstream
+      - name: grid_size
+        inputType: FreeText
+        required: false
+        value: 10
 
 # This section describes the Topics of the data pipeline
 topics:
   - name: clickstream-group-by-page
-    persisted: false
     configuration:
       partitions: 2
       replicationFactor: 2
       retentionInMinutes: 10080
       retentionInBytes: 52428800
   - name: clickstream
-    persisted: false
     configuration:
       partitions: 2
       replicationFactor: 2
       retentionInMinutes: 10080
       retentionInBytes: 52428800
   - name: heatmap
-    persisted: false
     configuration:
       partitions: 2
       replicationFactor: 2
       retentionInMinutes: 10080
+      retentionInBytes: 52428800
+  - name: tiles-clickstream
+    configuration:
+      partitions: 4
+  - name: repartition__heatmap-aggregator-v1--tiles-clickstream--group_by_page_tiles
+    configuration:
+      partitions: 4
+      replicationFactor: 2
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
+  - name: repartition__heatmap-aggregator-v1.1--tiles-clickstream--group_by_page_tiles
+    configuration:
+      partitions: 4
+      replicationFactor: 2
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
+  - name: repartition__heatmap-aggregator-v1.1--tiles-clickstream--group_bx
+    configuration:
+      partitions: 4
+      replicationFactor: 2
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
+  - name: repartition__heatmap-aggregator-v1.1--tiles-clickstream--group_by
+    configuration:
+      partitions: 4
+      replicationFactor: 2
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
+  - name: repartition__heatmap-aggregator-v1.1--tiles-clickstream--group_by_tile
+    configuration:
+      partitions: 4
+      replicationFactor: 2
+      retentionInMinutes: 1440
+      retentionInBytes: 52428800
+  - name: repartition__heatmap-aggregator-v1.1--tiles-clickstream--group
+    configuration:
+      partitions: 4
+      replicationFactor: 2
+      retentionInMinutes: 1440
       retentionInBytes: 52428800

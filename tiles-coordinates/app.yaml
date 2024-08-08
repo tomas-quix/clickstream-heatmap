@@ -1,4 +1,4 @@
-name: group-by
+name: tiles-coordinates
 language: Python
 variables:
   - name: input
@@ -9,7 +9,11 @@ variables:
   - name: output
     inputType: OutputTopic
     description: Name of the output topic to write to.
-    defaultValue: clickstream-group-by-page
+    defaultValue: tiles-clickstream
+    required: false
+  - name: grid_size
+    inputType: FreeText
+    defaultValue: 50
     required: false
 dockerfile: dockerfile
 runEntryPoint: main.py
